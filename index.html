@@ -368,5 +368,90 @@ figure.card figcaption{
   </figure>
 </div>
 
+<hr style="border: 1px solid #ccc; margin: 2rem auto; width: 80%;">
+
+<div class="qualitative-grid">
+
+  <!-- 1 ─────────────────────────── -->
+  <figure class="card">
+    <div class="image-wrapper">
+        <img src="images/4.png" alt="Original Image">
+        <div class="textbox"><b>Original Image</b>: Raw photo, no processing is applied.</div>
+    </div>
+    <figcaption>Original Image</figcaption>
+  </figure>
+
+  <!-- 2 ─────────────────────────── -->
+  <figure class="card">
+    <div class="image-wrapper">
+      <img src="images/4_gemini_output.png" alt="Gemini 2.5 Output">
+      <div class="textbox">
+        <b>Gemini 2.5 Output</b>: Masking is completely unaligned, output text is also innacurate.
+      </div>
+    </div>
+    <figcaption>Gemini 2.5 Output</figcaption>
+  </figure>
+
+  <!-- 3 ─────────────────────────── -->
+  <figure class="card">
+    <div class="image-wrapper">
+      <img src="images/4_gpt4o_output.png" alt="GPT-4o Output">
+      <div class="textbox">
+        <b>GPT-4o Output</b>: Unable to identify the text.
+      </div>
+    </div>
+    <figcaption>GPT-4o Output</figcaption>
+  </figure>
+
+  <!-- 4 ─────────────────────────── -->
+  <figure class="card">
+    <div class="image-wrapper">
+      <img src="images/4_gpto3_output.png" alt="GPTo3 Output">
+      <div class="textbox">
+        <b>GPTo3 Output</b>: Thought for 7m 22s. Result in fine-grained masks, but PII text is visible.
+      </div>
+    </div>
+    <figcaption>GPTo3 Output</figcaption>
+  </figure>
+
+  <!-- # empty space -->
+    <!-- <div style="height: 1.75rem;"></div> -->
+    <!-- <div style="height: 1.75rem;"></div> -->
+
+
+  <!-- 5 ─────────────────────────── -->
+  <figure class="card">
+    <div class="image-wrapper">
+      <img src="images/4_mistralocr_output.png" alt="MistralOCR Output">
+      <div class="textbox">
+        <b>MistralOCR Output</b>: Unable to identify the text.
+      </div>
+    </div>
+    <figcaption>MistralOCR Output</figcaption>
+  </figure>
+
+  <!-- 6 ─────────────────────────── -->
+  <figure class="card">
+    <div class="image-wrapper">
+      <img src="images/4_finegrained_ours.png" alt="Full Fine-Grained Output">
+      <div class="textbox">
+        <b>Full Fine-Grained (ours)</b>: Our fine-grained method masks *every* field with tight boxes.
+      </div>
+    </div>
+    <figcaption>Full Fine-Grained (ours)</figcaption>
+  </figure>
+
+  <!-- 7 ─────────────────────────── -->
+  <figure class="card">
+    <div class="image-wrapper">
+      <img src="images/4_figpriv_ours.png" alt="Fig-Priv Output">
+      <div class="textbox">
+        <b>⭐ Fig-Priv (ours)</b>: Fig-Priv removes only highest-risk sections, preserving non-identifiable content.
+      </div>
+    </div>
+    <figcaption>⭐ Fig-Priv (ours)</figcaption>
+  </figure>
+</div>
+
 </body>
 </html>
