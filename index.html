@@ -1,1 +1,372 @@
-Index
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Qualitative Examples – Hover Zoom + Textbox</title>
+
+<style>
+/* ----------  Grid & basic figure layout ---------- */
+.qualitative-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(240px,1fr));
+  gap:1.75rem;
+  max-width:1400px;
+  margin:0 auto;
+  padding:2rem 1rem;
+  font-family:system-ui, sans-serif;
+}
+
+figure.card{ margin:0; text-align:center; position:relative; }
+figure.card figcaption{
+  margin-top:0.65rem; font-weight:600; font-size:1.05rem;
+}
+
+/* ----------  Thumbnail wrapper ---------- */
+.image-wrapper{
+  position:relative;
+  overflow:hidden;
+  border-radius:8px;
+  box-shadow:0 1px 4px rgba(0,0,0,0.12);
+  /* transition:box-shadow .35s ease, transform .45s ease, width .45s ease, height .45s ease; */
+  transition:box-shadow .35s ease, opacity .35s ease;
+}
+.image-wrapper img{ width:100%; height:auto; display:block; }
+
+/* ----------  Textbox (default – hidden) ---------- */
+.textbox{
+  position:absolute;
+  top:calc(100% + 10px);          /* under thumbnail (unchanged) */
+  left:50%;
+  transform:translateX(-50%);
+  background:#111; color:#fff;
+  padding:0.8rem 1rem;
+  max-width:320px; width:90%;
+  border-radius:6px;
+  font-size:0.94rem; line-height:1.35;
+  box-shadow:0 2px 8px rgba(0,0,0,0.4);
+  opacity:0; pointer-events:none;
+  transition:opacity .35s ease;
+}
+
+/* ----------  Light-box hover state ---------- */
+.card:hover{ z-index:2000; }
+
+.card:hover .image-wrapper{
+  position:fixed; top:50%; left:50%;
+  transform:translate(-50%,-50%);
+  width:60vw; max-height:50vh; height:auto;
+  overflow:visible;
+  box-shadow:-100px 180px 400px rgba(0,0,0,0.55);
+}
+
+/* ⭐ CHANGED: textbox now ABOVE the zoomed image */
+/* .card:hover .textbox{
+  opacity:1;
+  top:auto;                             
+  bottom:calc(100% - 12px);             
+  left:90%;
+  transform:translateX(-50%);
+  width:90vw; max-width:600px;
+  text-align:center;
+} */
+
+/* ----------  Textbox (hidden by default)  ---------- */
+.image-wrapper .textbox{
+  /* position:absolute;
+  bottom:100%;                      
+  left:50%;
+  transform:translate(-50%, -12px); 
+  background:#111; color:#fff;
+  padding:0.8rem 1rem;
+  max-width:320px; width:90%;
+  border-radius:6px;
+  font-size:0.94rem; line-height:1.35;
+  box-shadow:0 2px 8px rgba(0,0,0,0.4);
+  opacity:0; pointer-events:none;
+  transition:opacity .35s ease; */
+  position:absolute;
+  top:calc(-20%);          /* 100% + 10px */
+  left:50%;
+  transform:translateX(-50%);
+  background:#111; color:#fff;
+  padding:0.8rem 1rem;
+  max-width:520px; width:100%;
+  border-radius:6px;
+  font-size:1.94rem; line-height:1.35;
+  box-shadow:0 2px 8px rgba(0,0,0,0.4);
+  opacity:0; pointer-events:none;
+  transition:opacity .35s ease;
+}
+
+/* ----------  Show textbox on hover  ---------- */
+.card:hover .textbox{
+  opacity:1;
+}
+
+/* (Optional) lock background scroll while light-box is open */
+/* .card:hover body{ overflow:hidden; } */
+</style>
+
+</head>
+<body>
+
+<div style="text-align: center; margin-bottom: 1.5rem; font-family:system-ui, sans-serif;">
+    <h1>Is an agentic approach necessary in this context?</h1>
+    <h2>Fig-Priv vs. current SOTA models: Hover over the images to zoom in!</h2>
+</div>
+
+<div class="qualitative-grid">
+
+  <!-- 1 ─────────────────────────── -->
+  <figure class="card">
+    <div class="image-wrapper">
+        <img src="images/1.png" alt="Original Image">
+        <div class="textbox"><b>Original Image</b>: Raw photo, no processing is applied.</div>
+    </div>
+    <figcaption>Original Image</figcaption>
+  </figure>
+
+  <!-- 2 ─────────────────────────── -->
+  <figure class="card">
+    <div class="image-wrapper">
+      <img src="images/1_gemini_output.png" alt="Gemini 2.5 Output">
+      <div class="textbox">
+        <b>Gemini 2.5 Output</b>: Masking is completely unaligned, output text is also innacurate.
+      </div>
+    </div>
+    <figcaption>Gemini 2.5 Output</figcaption>
+  </figure>
+
+  <!-- 3 ─────────────────────────── -->
+  <figure class="card">
+    <div class="image-wrapper">
+      <img src="images/1_gpt4o_output.png" alt="GPT-4o Output">
+      <div class="textbox">
+        <b>GPT-4o Output</b>: Masks only a few small regions, masking is also unaligned, unable to identify all text.
+      </div>
+    </div>
+    <figcaption>GPT-4o Output</figcaption>
+  </figure>
+
+  <!-- 4 ─────────────────────────── -->
+  <figure class="card">
+    <div class="image-wrapper">
+      <img src="images/1_gpto3_output.png" alt="GPTo3 Output">
+      <div class="textbox">
+        <b>GPTo3 Output</b>: Thought for 2m 28s. Text-only answer returned, failed to identify the text.
+      </div>
+    </div>
+    <figcaption>GPTo3 Output</figcaption>
+  </figure>
+
+  <!-- # empty space -->
+    <!-- <div style="height: 1.75rem;"></div> -->
+    <!-- <div style="height: 1.75rem;"></div> -->
+
+
+  <!-- 5 ─────────────────────────── -->
+  <figure class="card">
+    <div class="image-wrapper">
+      <img src="images/1_mistralocr_output.png" alt="MistralOCR Output">
+      <div class="textbox">
+        <b>MistralOCR Output</b>: Full OCR transcript shown as plain text, without spatial localization.
+      </div>
+    </div>
+    <figcaption>MistralOCR Output</figcaption>
+  </figure>
+
+  <!-- 6 ─────────────────────────── -->
+  <figure class="card">
+    <div class="image-wrapper">
+      <img src="images/1_finegrained_ours.png" alt="Full Fine-Grained Output">
+      <div class="textbox">
+        <b>Full Fine-Grained (ours)</b>: Our fine-grained method masks *every* field with tight boxes.
+      </div>
+    </div>
+    <figcaption>Full Fine-Grained (ours)</figcaption>
+  </figure>
+
+  <!-- 7 ─────────────────────────── -->
+  <figure class="card">
+    <div class="image-wrapper">
+      <img src="images/1_figpriv_ours.png" alt="Fig-Priv Output">
+      <div class="textbox">
+        <b>⭐ Fig-Priv (ours)</b>: Fig-Priv removes only highest-risk sections, preserving non-identifiable content.
+      </div>
+    </div>
+    <figcaption>⭐ Fig-Priv (ours)</figcaption>
+  </figure>
+</div>
+
+<hr style="border: 1px solid #ccc; margin: 2rem auto; width: 80%;">
+
+<div class="qualitative-grid">
+
+  <!-- 1 ─────────────────────────── -->
+  <figure class="card">
+    <div class="image-wrapper">
+        <img src="images/2.png" alt="Original Image">
+        <div class="textbox"><b>Original Image</b>: Raw photo, no processing is applied.</div>
+    </div>
+    <figcaption>Original Image</figcaption>
+  </figure>
+
+  <!-- 2 ─────────────────────────── -->
+  <figure class="card">
+    <div class="image-wrapper">
+      <img src="images/2_gemini_output.png" alt="Gemini 2.5 Output">
+      <div class="textbox">
+        <b>Gemini 2.5 Output</b>: Masking is completely unaligned, output text is also innacurate.
+      </div>
+    </div>
+    <figcaption>Gemini 2.5 Output</figcaption>
+  </figure>
+
+  <!-- 3 ─────────────────────────── -->
+  <figure class="card">
+    <div class="image-wrapper">
+      <img src="images/2_gpt4o_output.png" alt="GPT-4o Output">
+      <div class="textbox">
+        <b>GPT-4o Output</b>: Unable to identify the text.
+      </div>
+    </div>
+    <figcaption>GPT-4o Output</figcaption>
+  </figure>
+
+  <!-- 4 ─────────────────────────── -->
+  <figure class="card">
+    <div class="image-wrapper">
+      <img src="images/2_gpto3_output.png" alt="GPTo3 Output">
+      <div class="textbox">
+        <b>GPTo3 Output</b>: Thought for 4m 52s. Result in blanket-masking, yet some text is still visible.
+      </div>
+    </div>
+    <figcaption>GPTo3 Output</figcaption>
+  </figure>
+
+  <!-- # empty space -->
+    <!-- <div style="height: 1.75rem;"></div> -->
+    <!-- <div style="height: 1.75rem;"></div> -->
+
+
+  <!-- 5 ─────────────────────────── -->
+  <figure class="card">
+    <div class="image-wrapper">
+      <img src="images/2_mistralocr_output.png" alt="MistralOCR Output">
+      <div class="textbox">
+        <b>MistralOCR Output</b>: Unable to identify the text.
+      </div>
+    </div>
+    <figcaption>MistralOCR Output</figcaption>
+  </figure>
+
+  <!-- 6 ─────────────────────────── -->
+  <figure class="card">
+    <div class="image-wrapper">
+      <img src="images/2_finegrained_ours.png" alt="Full Fine-Grained Output">
+      <div class="textbox">
+        <b>Full Fine-Grained (ours)</b>: Our fine-grained method masks *every* field with tight boxes.
+      </div>
+    </div>
+    <figcaption>Full Fine-Grained (ours)</figcaption>
+  </figure>
+
+  <!-- 7 ─────────────────────────── -->
+  <figure class="card">
+    <div class="image-wrapper">
+      <img src="images/2_figpriv_ours.png" alt="Fig-Priv Output">
+      <div class="textbox">
+        <b>⭐ Fig-Priv (ours)</b>: Fig-Priv removes only highest-risk sections, preserving non-identifiable content.
+      </div>
+    </div>
+    <figcaption>⭐ Fig-Priv (ours)</figcaption>
+  </figure>
+</div>
+
+<hr style="border: 1px solid #ccc; margin: 2rem auto; width: 80%;">
+
+<div class="qualitative-grid">
+
+  <!-- 1 ─────────────────────────── -->
+  <figure class="card">
+    <div class="image-wrapper">
+        <img src="images/3.png" alt="Original Image">
+        <div class="textbox"><b>Original Image</b>: Raw photo, no processing is applied.</div>
+    </div>
+    <figcaption>Original Image</figcaption>
+  </figure>
+
+  <!-- 2 ─────────────────────────── -->
+  <figure class="card">
+    <div class="image-wrapper">
+      <img src="images/3_gemini_output.png" alt="Gemini 2.5 Output">
+      <div class="textbox">
+        <b>Gemini 2.5 Output</b>: Masking is completely unaligned, output text is also innacurate.
+      </div>
+    </div>
+    <figcaption>Gemini 2.5 Output</figcaption>
+  </figure>
+
+  <!-- 3 ─────────────────────────── -->
+  <figure class="card">
+    <div class="image-wrapper">
+      <img src="images/3_gpt4o_output.png" alt="GPT-4o Output">
+      <div class="textbox">
+        <b>GPT-4o Output</b>: Unable to identify the text.
+      </div>
+    </div>
+    <figcaption>GPT-4o Output</figcaption>
+  </figure>
+
+  <!-- 4 ─────────────────────────── -->
+  <figure class="card">
+    <div class="image-wrapper">
+      <img src="images/3_gpto3_output.png" alt="GPTo3 Output">
+      <div class="textbox">
+        <b>GPTo3 Output</b>: Thought for 3m 58s. Result in fine-grained masking, but larger masks.
+      </div>
+    </div>
+    <figcaption>GPTo3 Output</figcaption>
+  </figure>
+
+  <!-- # empty space -->
+    <!-- <div style="height: 1.75rem;"></div> -->
+    <!-- <div style="height: 1.75rem;"></div> -->
+
+
+  <!-- 5 ─────────────────────────── -->
+  <figure class="card">
+    <div class="image-wrapper">
+      <img src="images/3_mistralocr_output.png" alt="MistralOCR Output">
+      <div class="textbox">
+        <b>MistralOCR Output</b>: Unable to identify the text.
+      </div>
+    </div>
+    <figcaption>MistralOCR Output</figcaption>
+  </figure>
+
+  <!-- 6 ─────────────────────────── -->
+  <figure class="card">
+    <div class="image-wrapper">
+      <img src="images/3_finegrained_ours.png" alt="Full Fine-Grained Output">
+      <div class="textbox">
+        <b>Full Fine-Grained (ours)</b>: Our fine-grained method masks *every* field with tight boxes.
+      </div>
+    </div>
+    <figcaption>Full Fine-Grained (ours)</figcaption>
+  </figure>
+
+  <!-- 7 ─────────────────────────── -->
+  <figure class="card">
+    <div class="image-wrapper">
+      <img src="images/3_figpriv_ours.png" alt="Fig-Priv Output">
+      <div class="textbox">
+        <b>⭐ Fig-Priv (ours)</b>: Fig-Priv preserves all the image, as PII content is not present.
+      </div>
+    </div>
+    <figcaption>⭐ Fig-Priv (ours)</figcaption>
+  </figure>
+</div>
+
+</body>
+</html>
